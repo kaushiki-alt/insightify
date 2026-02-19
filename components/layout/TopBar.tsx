@@ -35,7 +35,7 @@ const Topbar = () => {
   return (
     <header
       className="
-        fixed top-0 z-40 h-14 border-b bg-neutral-50 flex items-center justify-between px-6"
+        fixed top-0 z-40 h-14 border-b bg-neutral-50 flex items-center justify-between px-12"
       style={{
         left: SIDEBAR_WIDTH,
         width: `calc(100% - ${SIDEBAR_WIDTH}px)`,
@@ -44,18 +44,18 @@ const Topbar = () => {
       {/* LEFT: active page title */}
       <div>
       
-        <h1 className="text-lg font-semibold tracking-tight">
+        <h1 className="text-xl font-semibold tracking-wider">
           {activeItem?.label ?? "Dashboard"}
         </h1>
       </div>
 
       {/* RIGHT: global actions */}
-      <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" aria-label="Notifications">
+      <div className="flex items-center gap-4">
+        <Button variant="outline" size="icon" aria-label="Notifications">
           <Bell className="h-4 w-4" />
         </Button>
 
-        <Button variant="ghost" size="icon" aria-label="Toggle theme">
+        <Button variant="outline" size="icon" aria-label="Toggle theme">
           <Sun className="h-4 w-4" />
         </Button>
 
