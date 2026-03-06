@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { Order_cat, OrderProduct, Product } from "./types"
+import { ExtendedUser, Order_cat, OrderProduct, Product, User } from "./types"
+import { redirect } from "next/navigation"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -64,8 +65,8 @@ export function simulateWeeklyRevenue(
 
 export function simulateCategoryRevenue(products_data: Product[], orders_data: Order_cat[]): ChartRevenue[] {
   const categoryMap: Record<string, {
-    revenue : number,
-    orders : number
+    revenue: number,
+    orders: number
   }> = {};
   const product_category: Record<number, string> = {};
 
@@ -84,7 +85,7 @@ export function simulateCategoryRevenue(products_data: Product[], orders_data: O
       const productRevenue = discountedTotal;
 
       if (!categoryMap[category]) {
-        categoryMap[category] = {revenue:0, orders: 0}
+        categoryMap[category] = { revenue: 0, orders: 0 }
       }
       categoryMap[category].revenue += productRevenue;
       categoryPerOrder.forEach((category) => (
@@ -95,14 +96,14 @@ export function simulateCategoryRevenue(products_data: Product[], orders_data: O
 
   const categoryRevenue: ChartRevenue[] = Object.entries(categoryMap).map(([label, data]) => {
     const revenue = Math.round(data.revenue * 100) / 100
-    const aov = data.orders > 0 ? (revenue/data.orders).toFixed(2) : 0
+    const aov = data.orders > 0 ? (revenue / data.orders).toFixed(2) : 0
     return {
       label,
       revenue,
       orders: data.orders,
       aov
     }
-})
+  })
 
   return categoryRevenue;
 }
@@ -112,7 +113,7 @@ export function getTopNCategory(categoryRevenue: ChartRevenue[], n: number, sort
   if (categoryRevenue.length <= n) {
     return categoryRevenue
   }
-     const sorted = [...categoryRevenue].sort(
+  const sorted = [...categoryRevenue].sort(
     (a, b) => b[sortBy] - a[sortBy]
   );
 
@@ -122,10 +123,10 @@ export function getTopNCategory(categoryRevenue: ChartRevenue[], n: number, sort
   const aov = otherOrders > 0 ? Math.round((othersRevenue / otherOrders) * 100) / 100 : 0
 
   const others = {
-      label: "Others",
-      revenue: Math.round(othersRevenue * 100) / 100,
-      orders : otherOrders,
-      aov
+    label: "Others",
+    revenue: Math.round(othersRevenue * 100) / 100,
+    orders: otherOrders,
+    aov
   }
 
   return [
@@ -133,3 +134,51 @@ export function getTopNCategory(categoryRevenue: ChartRevenue[], n: number, sort
   ];
 }
 
+// fetching users data 
+
+
+export async function getUsers(base_url: string): Promise<User[]> {  
+  const usersRes = await fetch(`${base_url}`)
+  if (!usersRes.ok) {
+    throw new Error("Failed to fetch users data");
+  }
+  const usersData = await usersRes.json();
+  return usersData.users;
+
+}
+
+export async function getUserByID(base_url: string, id: number): Promise<ExtendedUser> {
+  if (!id || isNaN(id)) {
+    redirect('/');
+  }
+  const usersRes = await fetch(`${base_url}/${id}`)
+  if (!usersRes.ok) {
+    throw new Error("Failed to fetch users data");
+  }
+  const userData = await usersRes.json();
+const extendedUser: ExtendedUser = {
+  ...userData,
+
+  status:
+    userData.age > 40
+      ? "suspended"
+      : userData.age > 25
+      ? "active"
+      : "pending",
+
+  emailVerified: userData.id % 2 === 0,
+
+  createdAt: new Date(
+    2022,
+    userData.id % 12,
+    userData.id % 28
+  ).toISOString(),
+
+  lastLogin: new Date(
+    Date.now() - userData.id * 10000000
+  ).toISOString(),
+};
+
+return extendedUser;
+
+}
