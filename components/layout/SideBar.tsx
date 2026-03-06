@@ -1,9 +1,12 @@
+'use client'
 import { sidebarNav, sidebarSecondaryNav } from '@/lib/data'
 import { Button } from "@/components/ui/button"
 import { SidebarIcon } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 const SideBar = () => {
+  const pathname = usePathname();
   return (
     <aside className='h-screen w-64 bg-neutral-50 rounded-md border-r-2 left-0 top-0 fixed flex flex-col px-6 py-5'>
       {/* header */}
@@ -24,7 +27,7 @@ const SideBar = () => {
             const Icon = item.icon
             return (
               <li key={label}>
-                <Button variant="ghost" className='w-full justify-start gap-4 text-md' asChild>
+                <Button variant={pathname == href ? 'default' : 'link'} className='w-full justify-start gap-4 text-md' asChild>
                   <Link href={href}>
                     <Icon className='size-5' />
                     <span>{label}</span>

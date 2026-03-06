@@ -2,13 +2,13 @@ import { Card, CardDescription, CardTitle } from '../ui/card'
 
 type KpiCardProp = {
     title : string;
-    data: number;
+    data: number | string;
 }
 const KpiCard = ({title, data}: KpiCardProp) => {
   return (
-    <Card className='kpicard p-4 h-24 gap-2'>
-        <CardTitle className='text-lg'>{title}</CardTitle>
-        <CardDescription className='text-md'>{data}</CardDescription>
+    <Card className='kpicard p-4 gap-2 flex flex-row justify-between items-center'>
+        <CardTitle className='text-md capitalize font-medium'>{title}</CardTitle>
+        <CardDescription className='text-lg text-primary capitalize font-bold'>{data}</CardDescription>
     </Card>
   )
 }
