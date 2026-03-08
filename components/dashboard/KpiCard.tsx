@@ -1,8 +1,9 @@
+import { ReactNode } from 'react';
 import { Card, CardDescription, CardTitle } from '../ui/card'
 
 type KpiCardProp = {
     title : string;
-    data: number | string;
+    data: ReactNode;
 }
 const KpiCard = ({title, data}: KpiCardProp) => {
   return (

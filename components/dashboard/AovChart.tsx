@@ -34,12 +34,12 @@ const AovChart = ({ data }: { data: ChartRevenue[] }) => {
                             axisLine={false}
                             tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                             dataKey='aov' />
-                        <ChartTooltip content={<ChartTooltipContent formatter={(value: number) =>
+                        <ChartTooltip content={<ChartTooltipContent formatter={(value) =>
                             new Intl.NumberFormat("en-US", {
                                 style: "currency",
                                 currency: "USD",
                                 minimumFractionDigits: 2,
-                            }).format(value)
+                            }).format(Number(value))
                         }
                         />
                         } />

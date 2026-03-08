@@ -14,11 +14,8 @@ type Order = {
 export type ChartRevenue = {
   label: string
   revenue: number
-} | {
-  label: string
-  revenue: number
-  orders: number
-  aov: number
+  orders?: number
+  aov?: number
 }
 
 
@@ -101,25 +98,28 @@ export function simulateCategoryRevenue(products_data: Product[], orders_data: O
       label,
       revenue,
       orders: data.orders,
-      aov
+      aov : Number(aov)
     }
   })
 
   return categoryRevenue;
 }
 
+  type SortKey = "orders" | "aov" | "revenue";
 
-export function getTopNCategory(categoryRevenue: ChartRevenue[], n: number, sortBy: "revenue" | "orders" | "aov"): ChartRevenue[] {
+export function getTopNCategory(categoryRevenue: ChartRevenue[], n: number, sortBy:SortKey): ChartRevenue[] {
   if (categoryRevenue.length <= n) {
     return categoryRevenue
   }
-  const sorted = [...categoryRevenue].sort(
-    (a, b) => b[sortBy] - a[sortBy]
-  );
+
+
+const sorted = [...categoryRevenue].sort(
+  (a, b) => (b[sortBy] ?? 0) - (a[sortBy] ?? 0)
+);
 
   const topN = sorted.slice(0, n);
   const othersRevenue = sorted.slice(n,).reduce((sum: number, item: ChartRevenue) => sum + item.revenue, 0);
-  const otherOrders = sorted.slice(n,).reduce((sum: number, item: ChartRevenue) => sum + item.orders, 0);
+  const otherOrders = sorted.slice(n,).reduce((sum: number, item: ChartRevenue) => sum + (item.orders ?? 0), 0);
   const aov = otherOrders > 0 ? Math.round((othersRevenue / otherOrders) * 100) / 100 : 0
 
   const others = {
