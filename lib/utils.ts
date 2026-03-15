@@ -137,13 +137,13 @@ const sorted = [...categoryRevenue].sort(
 // fetching users data 
 
 
-export async function getUsers(base_url: string): Promise<User[]> {  
-  const usersRes = await fetch(`${base_url}`)
-  if (!usersRes.ok) {
+export async function getData<T>(base_url: string): Promise<T> {  
+  const response = await fetch(`${base_url}`)
+  if (!response.ok) {
     throw new Error("Failed to fetch users data");
   }
-  const usersData = await usersRes.json();
-  return usersData.users;
+  const data = await response.json();
+  return data;
 
 }
 
