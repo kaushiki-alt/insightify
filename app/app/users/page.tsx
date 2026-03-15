@@ -3,11 +3,12 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { TablePagination } from "@/components/users/TablePagination";
-import { UserSearch } from "@/components/users/UserSearch";
-import UsersTable from "@/components/users/UsersTable";
-import { User } from "@/lib/types";
+import { UserSearch } from "@/components/SearchBar";
+import { Address, Column, User } from "@/lib/types";
 import { getUsers } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import DataTable from "@/components/DataTable";
+import Row from "@/components/Row";
 
 function page() {
   const base_url = 'https://dummyjson.com//users?limit=100';
@@ -87,6 +88,21 @@ function page() {
     setCurrentPage(1)
   }, [searchQuery])
 
+  const userColumns: Column<User>[] = [
+    { key: "username", label: "Username", sortable: true },
+    { key: "firstName", label: "Name", sortable: true },
+    { key: "age", label: "Age", sortable: true },
+    { key: "gender", label: "Gender" },
+    { key: "phone", label: "Phone" },
+    { key: "email", label: "Email" },
+    { key: "country", label: "Country" },
+    { key: "role", label: "Role" },
+    { key: "actions", label: "Actions" }
+  ]
+
+  const renderUserRow = (user: User) => (
+    <Row key={user.id} user={user} />
+  )
   return (
     <>
       <Card className="p-8">
@@ -98,16 +114,24 @@ function page() {
 
         {/* toolbar */}
         <div className="toolabar flex flex-col md:justify-between gap-4 md:flex-row md:items-center mb-6">
-          <UserSearch value={searchQuery} onSearchChange={setSearchQuery} />
+          <UserSearch value={searchQuery} onSearchChange={setSearchQuery} placeholder="Search Users...." />
           <Button variant="secondary" className="w-full md:w-auto">Add User</Button>
         </div>
 
         {/* table */}
         <div className="mb-6 overflow-x-scroll">
-          <UsersTable users={paginatedUsers} sortfn={handleSort} sortKey={sortKey}
-            sortDirection={sortDir} />
+          {paginatedUsers.length === 0 ? (
+            <div className="flex items-center justify-center py-12 text-muted-foreground">
+              <p className="text-lg font-medium">No users found</p>
+            </div>
+          ) : (
+            <DataTable
+              data={paginatedUsers}
+              columns={userColumns}
+              sortFn={handleSort}
+              renderRow={renderUserRow}
+            />)}
         </div>
-
         {/* pagination */}
         <div className="align-baseline">
           <TablePagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />

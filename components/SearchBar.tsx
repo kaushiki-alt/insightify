@@ -1,9 +1,11 @@
 export function UserSearch({
   value,
   onSearchChange,
+  placeholder,
 }: {
   value: string;
   onSearchChange: (value: string) => void;
+  placeholder:string;
 }) {
   return (
     <label className="flex items-center gap-2 border rounded-md px-3 py-2 w-full md:w-80 bg-white focus-within:ring-1 focus-within:ring-primary/30 transition">
@@ -26,7 +28,7 @@ export function UserSearch({
 
       <input
         type="search"
-        placeholder="Search users..."
+        placeholder={placeholder}
         value={value}
         onChange={(e) => onSearchChange(e.target.value)}
         className="w-full bg-transparent outline-none text-sm placeholder:text-muted-foreground"
