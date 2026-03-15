@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { TablePagination } from "@/components/users/TablePagination";
 import { UserSearch } from "@/components/SearchBar";
 import { Address, Column, User } from "@/lib/types";
-import { getUsers } from "@/lib/utils";
+import { getData } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import DataTable from "@/components/DataTable";
 import Row from "@/components/Row";
@@ -23,7 +23,8 @@ function page() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const data = await getUsers(base_url)
+        const fetchData = await getData<{ users: User[] }>(base_url)
+        const data = fetchData.users
         setRawUsers(data);
       } catch (error) {
         console.log(error);
