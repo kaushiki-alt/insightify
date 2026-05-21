@@ -1,6 +1,24 @@
+
+type ProductReviews = {
+  rating : number;
+  comment : string;
+  reviewerEmail : string;
+  reviewerName : string;
+  
+}
 export type Product = {
   id: number;
+  title : string;
   category: string;
+  brand: string;
+  description: string;
+  price: number;
+  stock: number;
+  thumbnail: string;
+  rating: number;
+  returnPolicy: string;
+  warrantyInformation: string;
+  reviews : ProductReviews[];
 }
 
 export type OrderProduct = {
