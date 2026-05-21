@@ -37,6 +37,7 @@ export default function DataTable<T>({ data,
                   {column.label}
                 </TableHead>
               ))}
+              
             </TableRow>
           </TableHeader>
           <TableBody>
