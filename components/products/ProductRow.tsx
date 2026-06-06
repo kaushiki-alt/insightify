@@ -1,3 +1,4 @@
+'use client'
 import { TableCell, TableRow } from "@/components/ui/table"
 import { Product } from "@/lib/types"
 import { useRouter } from "next/navigation"
@@ -19,14 +20,14 @@ export function StockBadge({ stock }: StockBadgeProps) {
 
     if (stock <= 10) {
         return (
-            <Badge className="bg-yellow-500 hover:bg-yellow-500">
+            <Badge className="bg-yellow-500/20 hover:bg-yellow-500/40 text-yellow-500">
                 🟡 Low Stock
             </Badge>
         )
     }
 
     return (
-        <Badge className="bg-green-600 hover:bg-green-600">
+        <Badge className="bg-green-600/20 hover:bg-green-600/40 text-green-600">
             🟢 In Stock
         </Badge>
     )
@@ -53,8 +54,8 @@ export default function Row({ product }: ProductRowProps) {
             <TableCell>{rating || "--"}</TableCell>
             <TableCell>
                 <div className="flex flex-col items-center gap-2">
-                    <span>{product.stock}</span>
-                    <StockBadge stock={product.stock} />
+                    <span>{stock}</span>
+                    <StockBadge stock={stock} />
                 </div>
             </TableCell>
             <TableCell className="text-right">

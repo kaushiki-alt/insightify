@@ -5,22 +5,22 @@ import CategoryChart from './CategoryChart';
 import AovChart from './AovChart';
 
 type ChartProps = {
-    revenueData : ChartRevenue[];
-    categoryData: ChartRevenue[];
-    aovData : ChartRevenue[];
+  revenueData: ChartRevenue[];
+  categoryData: ChartRevenue[];
+  aovData: ChartRevenue[];
 }
-const ChartContainer = ({revenueData, categoryData, aovData}:ChartProps) => {
+const ChartContainer = ({ revenueData, categoryData, aovData }: ChartProps) => {
   return (
-    <div className='p-4 mt-8'>
-      <h2 className="font-medium text-2xl">Performance Overview</h2>
-    <div className='grid gap-2 mt-3'>
+    <div className="px-2 md:px-4 mt-6">
+      <h2 className="font-medium text-lg tracking-tight lg:text-2xl">Performance Overview</h2>
+      <div className='grid gap-2 mt-3'>
 
-      <RevenueChart data={revenueData} />
-      <div className='grid md:grid-cols-2 gap-2'>
-      <CategoryChart data={categoryData} />
-      <AovChart data={aovData} />
+        <RevenueChart data={revenueData} />
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
+          <CategoryChart data={categoryData} />
+          <AovChart data={aovData} />
+        </div>
       </div>
-    </div>
     </div>
   )
 }

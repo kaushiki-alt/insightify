@@ -2,7 +2,7 @@
 import { Card } from '../ui/card'
 import { ChartRevenue } from '@/lib/utils'
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '../ui/chart'
-import { BarChart,Bar, CartesianGrid, XAxis, YAxis } from 'recharts'
+import { BarChart, Bar, CartesianGrid, XAxis, YAxis } from 'recharts'
 
 const AovChart = ({ data }: { data: ChartRevenue[] }) => {
 
@@ -14,22 +14,26 @@ const AovChart = ({ data }: { data: ChartRevenue[] }) => {
     } satisfies ChartConfig;
     return (
         <>
-            <Card className='p-8 pl-6 rounded-sm shadow-sm border'>
+            <Card className='p-4 md:p-8 rounded-sm shadow-sm border overflow-hidden'>
                 <div className="title text-center mb-6">
-                    <h2 className='text-xl font-semibold tracking-tight capitalize'> Avg Order Value (Category) </h2>
-                    <p className="text-sm text-muted-foreground mt-1">Top 5 categories</p>
+                    <h2 className='text-lg lg:text-xl font-semibold tracking-tight capitalize'> Avg Order Value (Category) </h2>
+                    <p className="text-xs lg:text-sm text-muted-foreground mt-1">Top 5 categories</p>
                 </div>
 
                 <ChartContainer config={chartConfig} className='h-85 w-full'>
-                    <BarChart data={data}  margin={{ bottom: 30 }}>
+                    <BarChart data={data} margin={{ bottom: 30 }}>
                         <CartesianGrid vertical={false} stroke="#e5e7eb"
                             strokeDasharray="3 3" />
-                        <XAxis dataKey='label'
+                        <XAxis
+                            dataKey="label"
                             tickLine={false}
                             axisLine={false}
-                            angle={90}      
-                             textAnchor="start"                  />
+                            angle={-45}
+                            textAnchor="end"
+                            height={60}
+                        />
                         <YAxis
+                            width={40}
                             tickLine={false}
                             axisLine={false}
                             tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
