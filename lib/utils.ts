@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { ExtendedUser, Order_cat, OrderProduct, Product, User } from "./types"
+import { ExtendedProduct, ExtendedUser, Order_cat, OrderProduct, Product, User } from "./types"
 import { redirect } from "next/navigation"
 
 export function cn(...inputs: ClassValue[]) {
@@ -181,4 +181,21 @@ const extendedUser: ExtendedUser = {
 
 return extendedUser;
 
+}
+
+export async function getProductByID(base_url:string, id:number) : Promise<ExtendedProduct> {
+    if (!id || isNaN(id)) {
+    redirect('/');
+  }
+    const productRes = await fetch(`${base_url}/${id}`)
+  if (!productRes.ok) {
+    throw new Error("Failed to fetch products data");
+  }
+
+    const productData = await productRes.json();
+const extendedProduct: ExtendedProduct = {
+  ...productData,
+}
+
+return extendedProduct;
 }

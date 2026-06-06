@@ -16,12 +16,12 @@ const RevenueChart = ({ data }: { data: ChartRevenue[] }) => {
 
     return (
         <>
-            <Card className='p-8 pl-6 rounded-sm shadow-sm border'>
+            <Card className='w-full overflow-hidden p-4 md:p-8 border'>
                 <div className="title text-center mb-6">
-                    <h2 className='text-xl font-semibold tracking-tight capitalize'> Weekly Revenue Trend </h2>
-                    <p className="text-sm text-muted-foreground mt-1">Last 30 days</p>
+                    <h2 className='text-lg lg:text-xl font-semibold tracking-tight capitalize'> Weekly Revenue Trend </h2>
+                    <p className="text-xs lg:text-sm text-muted-foreground mt-1">Last 30 days</p>
                 </div>
-                <ChartContainer config={chartConfig} className='h-75 w-full'>
+                <ChartContainer config={chartConfig} className='h-62.5 md:h-75 w-full overflow-hidden'>
                     <LineChart data={data}>
                         <CartesianGrid vertical={false} stroke="#e5e7eb"
                             strokeDasharray="3 3" />
@@ -29,18 +29,22 @@ const RevenueChart = ({ data }: { data: ChartRevenue[] }) => {
                             tickLine={false}
                             axisLine={false}
                             tickMargin={10}
+                            angle={-45}
+                            textAnchor='end'
+                            height={60}
                         />
                         <YAxis
+                            width={40}
                             tickLine={false}
                             axisLine={false}
                             tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                             dataKey='revenue' />
                         <ChartTooltip content={<ChartTooltipContent formatter={(value) =>
-                  new Intl.NumberFormat("en-US", {
-                    style: "currency",
-                    currency: "USD",
-                    minimumFractionDigits: 2,
-                  }).format(Number(value))
+                            new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                minimumFractionDigits: 2,
+                            }).format(Number(value))
                         }
                         />
                         } />

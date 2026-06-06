@@ -73,6 +73,19 @@ export type ExtendedUser = User & {
   lastLogin: string;
 };
 
+export type ProductMeta = {
+  createdAt: string;
+  updatedAt: string;
+
+}
+export type ExtendedProduct = Product & {
+  images: string[];
+  sku: string;
+  availabilityStatus: string;
+  meta : ProductMeta
+
+}
+
 export type Column<T> = {
   key: keyof T & string | string;
   label: string;

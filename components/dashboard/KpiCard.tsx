@@ -7,9 +7,9 @@ type KpiCardProp = {
 }
 const KpiCard = ({title, data}: KpiCardProp) => {
   return (
-    <Card className='kpicard p-4 gap-2 flex flex-row justify-between items-center'>
-        <CardTitle className='text-md capitalize font-medium'>{title}</CardTitle>
-        <CardDescription className='text-lg text-primary capitalize font-bold'>{data}</CardDescription>
+    <Card className='kpicard p-3 md:p-4 gap-2 flex flex-row justify-between items-center'>
+        <CardTitle className=' text-sm lg:text-md capitalize font-medium'>{title}</CardTitle>
+        <CardDescription className=' text-md lg:text-lg text-primary capitalize font-bold'>{data}</CardDescription>
     </Card>
   )
 }
