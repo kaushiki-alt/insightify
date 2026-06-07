@@ -9,6 +9,7 @@ import { getData } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import DataTable from "@/components/DataTable";
 import Row from "@/components/Row";
+import UserCard from "@/components/users/UserCard";
 
 function page() {
   const base_url = 'https://dummyjson.com//users?limit=100';
@@ -106,21 +107,21 @@ function page() {
   )
   return (
     <>
-      <Card className="p-8">
+      <Card className="p-4 md:p-6 lg:p-8">
         {/* header */}
-        <div className="header  mb-6">
-          <h2 className='text-xl font-semibold tracking-tight capitalize'> Users </h2>
-          <p className="text-sm text-muted-foreground mt-1">Manage and monitor user accounts</p>
+        <div className="header mb-6">
+          <h2 className='text-lg lg:text-xl font-semibold tracking-tight capitalize'> Users </h2>
+          <p className="text-xs lg:text-sm text-muted-foreground mt-1">Manage and monitor user accounts</p>
         </div>
 
         {/* toolbar */}
-        <div className="toolabar flex flex-col md:justify-between gap-4 md:flex-row md:items-center mb-6">
+        <div className="toolabar flex md:justify-between gap-4 md:items-center mb-6">
           <UserSearch value={searchQuery} onSearchChange={setSearchQuery} placeholder="Search Users...." />
-          <Button variant="secondary" className="w-full md:w-auto">Add User</Button>
+          <Button variant="secondary" className="w-auto">Add User</Button>
         </div>
 
         {/* table */}
-        <div className="mb-6 overflow-x-scroll">
+        <div className="hidden md:block mb-6 overflow-x-auto">
           {paginatedUsers.length === 0 ? (
             <div className="flex items-center justify-center py-12 text-muted-foreground">
               <p className="text-lg font-medium">No users found</p>
@@ -133,10 +134,23 @@ function page() {
               renderRow={renderUserRow}
             />)}
         </div>
+
+        {/* Mobile Cards */}
+        <div className="md:hidden space-y-3 mb-6">
+          {paginatedUsers.map((user) => (
+            <UserCard
+              key={user.id}
+              user={user}
+            />
+          ))}
+        </div>
+
         {/* pagination */}
         <div className="align-baseline">
           <TablePagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
         </div>
+
+
       </Card>
     </>
   )
