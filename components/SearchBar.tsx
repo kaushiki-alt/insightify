@@ -8,7 +8,7 @@ export function UserSearch({
   placeholder:string;
 }) {
   return (
-    <label className="flex items-center gap-2 border rounded-md px-3 py-2 w-full md:w-80 bg-white focus-within:ring-1 focus-within:ring-primary/30 transition">
+    <label className="flex items-center gap-2 border rounded-md px-3 py-2 w-full lg:w-100 bg-white focus-within:ring-1 focus-within:ring-primary/30 transition">
       <svg
         className="h-4 w-4 text-muted-foreground"
         xmlns="http://www.w3.org/2000/svg"

@@ -1,9 +1,9 @@
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { User } from "@/lib/types";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
-import { Edit } from "lucide-react";
+import { Edit, Landmark, MapPin, User2 } from "lucide-react";
 
 const DetailRow = ({ value, label }: { value: React.ReactNode, label: string }) => {
     return (
@@ -15,16 +15,7 @@ const DetailRow = ({ value, label }: { value: React.ReactNode, label: string }) 
 }
 
 export const UserDetailCard = ({ user }: { user: User }) => {
-    const {
-        email,
-        phone,
-        firstName,
-        lastName,
-        age,
-        gender,
-        username,
-        role,
-    } = user;
+    const { email, phone, firstName, lastName, age, gender, username, role } = user;
 
     const name = `${firstName} ${lastName}`;
 
@@ -40,8 +31,10 @@ export const UserDetailCard = ({ user }: { user: User }) => {
 
     return (
         <Card className="w-full bg-card">
-            <CardHeader>
-                <CardTitle>Personal Details</CardTitle>
+            <CardHeader className="flex gap-1 items-center">
+                <User2 className="size-5 text-muted-foreground"/>
+                <CardTitle>
+                    Personal Details</CardTitle>
             </CardHeader>
             <CardContent className="p-6">
                 {details.map((item, index) => (
@@ -50,13 +43,6 @@ export const UserDetailCard = ({ user }: { user: User }) => {
                         {index < details.length - 1 && <Separator className="my-4" />}
                     </React.Fragment>
                 ))}
-
-                <div className='justify-self-end align-bottom'>
-                    <Button variant="outline" size="sm">
-                        <Edit size={16} />
-                        Edit
-                    </Button>
-                </div>
 
             </CardContent>
         </Card>
@@ -75,8 +61,10 @@ export const UserAddressCard = ({ user }: { user: User }) => {
 
     return (
         <Card className="w-full bg-card">
-            <CardHeader>
-                <CardTitle>Address Details</CardTitle>
+             <CardHeader className="flex gap-1 items-center">
+                <MapPin className="size-5 text-muted-foreground"/>
+                <CardTitle>
+                    Address Details</CardTitle>
             </CardHeader>
             <CardContent className="p-6 py-4">
                 {addressDetails.map((item, index) => (
@@ -109,8 +97,10 @@ export const UserBankCard = ({ user }: { user: User }) => {
 
     return (
         <Card className="w-full bg-card">
-            <CardHeader>
-                <CardTitle>Bank Details</CardTitle>
+            <CardHeader className="flex gap-1 items-center">
+                <Landmark className="size-5 text-muted-foreground"/>
+                <CardTitle>
+                    Bank Details</CardTitle>
             </CardHeader>
             <CardContent className="p-6 py-4">
                 {bankDetails.map((item, index) => (
