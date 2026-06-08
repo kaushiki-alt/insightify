@@ -5,11 +5,13 @@ import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 import { Edit, Landmark, MapPin, User2 } from "lucide-react";
 
-const DetailRow = ({ value, label }: { value: React.ReactNode, label: string }) => {
+export const DetailRow = ({ value, label }: { value: React.ReactNode, label: string }) => {
     return (
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col gap-1 sm:flex-row sm:justify-between sm:items-center">
             <p className="text-sm text-muted-foreground capitalize">{label}</p>
-            <div className="font-medium">{value}</div>
+            <div className="font-medium break-all sm:text-right">
+                {value}
+            </div>
         </div>
     )
 }
@@ -30,17 +32,17 @@ export const UserDetailCard = ({ user }: { user: User }) => {
     ];
 
     return (
-        <Card className="w-full bg-card">
+        <Card className="bg-card">
             <CardHeader className="flex gap-1 items-center">
-                <User2 className="size-5 text-muted-foreground"/>
+                <User2 className="size-5 text-muted-foreground" />
                 <CardTitle>
                     Personal Details</CardTitle>
             </CardHeader>
-            <CardContent className="p-6">
+            <CardContent className="p-4 md:p-6">
                 {details.map((item, index) => (
                     <React.Fragment key={item.label}>
                         <DetailRow label={item.label} value={item.value} />
-                        {index < details.length - 1 && <Separator className="my-4" />}
+                        {index < details.length - 1 && <Separator className="my-3" />}
                     </React.Fragment>
                 ))}
 
@@ -61,8 +63,8 @@ export const UserAddressCard = ({ user }: { user: User }) => {
 
     return (
         <Card className="w-full bg-card">
-             <CardHeader className="flex gap-1 items-center">
-                <MapPin className="size-5 text-muted-foreground"/>
+            <CardHeader className="flex gap-1 items-center">
+                <MapPin className="size-5 text-muted-foreground" />
                 <CardTitle>
                     Address Details</CardTitle>
             </CardHeader>
@@ -98,7 +100,7 @@ export const UserBankCard = ({ user }: { user: User }) => {
     return (
         <Card className="w-full bg-card">
             <CardHeader className="flex gap-1 items-center">
-                <Landmark className="size-5 text-muted-foreground"/>
+                <Landmark className="size-5 text-muted-foreground" />
                 <CardTitle>
                     Bank Details</CardTitle>
             </CardHeader>
